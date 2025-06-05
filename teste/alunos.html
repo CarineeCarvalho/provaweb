@@ -1,10 +1,12 @@
 <!-- ---------- alunos.html (Lista de Alunos) ---------- -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Exacta Aulas - Alunos</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <header>
         <big>
@@ -37,32 +39,47 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            // Aguarda todo o HTML ser carregado antes de rodar o código JavaScript
+
             const inscricoes = JSON.parse(localStorage.getItem('inscricoes')) || [];
+            // Recupera as inscrições salvas no localStorage. Se não houver nenhuma, usa um array vazio.
+
             const alunosList = document.getElementById('alunosList');
+            // Seleciona a div onde os alunos serão exibidos na tela
 
             if (inscricoes.length === 0) {
+                // Se não houver nenhum aluno inscrito
                 alunosList.innerHTML = '<p>Nenhum aluno inscrito ainda.</p>';
                 return;
             }
 
-            // Agrupa alunos por curso
+            // Cria um objeto para agrupar os alunos por curso
             const alunosPorCurso = {
                 Matemática: [],
                 Física: [],
                 Química: []
             };
 
+            // Para cada inscrição, adiciona o aluno na lista correspondente ao curso
             inscricoes.forEach(aluno => {
                 alunosPorCurso[aluno.curso].push(aluno);
             });
 
-            // Gera o HTML para cada curso
+            // Variável que armazenará o HTML gerado dinamicamente
             let html = '';
+            // Percorre cada curso dentro do objeto alunosPorCurso
+
             for (const curso in alunosPorCurso) {
                 if (alunosPorCurso[curso].length > 0) {
+                    // Se houver alunos nesse curso, começa a montar o HTML
+
                     html += `<h3>${curso}</h3><ul>`;
+                        // Adiciona o nome do curso e abre uma lista (<ul>)
+
                     alunosPorCurso[curso].forEach(aluno => {
+                        // Para cada aluno do curso, cria um item de lista (<li>) com os dados
+
                         html += `
                             <li>
                                 <strong>${aluno.nome}</strong> - 
@@ -75,6 +92,7 @@
             }
 
             alunosList.innerHTML = html;
+             // Insere o HTML montado dentro da div #alunosList, exibindo os dados na página
         });
     </script>
     <footer>
@@ -103,5 +121,6 @@
         </div>
     </footer>
 </body>
+
 </html>
 <!--  -->

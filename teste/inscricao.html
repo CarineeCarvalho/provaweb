@@ -28,13 +28,13 @@
                 </big></a>
         </nav>
     </header>
+<!-- formulario de inscrição -->
 
     <div class="inscrição">
         <h2>Inscrição</h2>
         <form id="formInscricao" action="catalogo.html" method="get">
             <input type="text" id="nome" placeholder="Nome completo" required>
             <input type="email" id="email" placeholder="E-mail" required>
-            <input type="number" id="numero" placeholder="Número de celular" required>
             <select id="curso" required>
                 <option value="">Selecione um curso</option>
                 <option value="Matemática">Matemática</option>
@@ -46,30 +46,39 @@
     </div>
 
     <script>
-        document.getElementById('formInscricao').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Captura os dados do formulário
-            const aluno = {
-                nome: document.getElementById('nome').value,
-                email: document.getElementById('email').value,
-                curso: document.getElementById('curso').value,
-                data: new Date().toLocaleDateString()
-            };
+    // Adiciona um ouvinte de evento ao formulário quando ele for enviado
+    document.getElementById('formInscricao').addEventListener('submit', function(e) {
+        e.preventDefault(); // Impede o envio tradicional do formulário (e recarregamento da página)
 
-            // Salva no localStorage
-            salvarInscricao(aluno);
-            
-            alert('Inscrição realizada com sucesso!');
-            this.reset();
-        });
+        // Cria um objeto com os dados do aluno capturados do formulário
+        const aluno = {
+            nome: document.getElementById('nome').value, // Pega o valor do campo "nome"
+            email: document.getElementById('email').value, // Pega o valor do campo "email"
+            curso: document.getElementById('curso').value, // Pega o curso selecionado
+            data: new Date().toLocaleDateString() // Adiciona a data atual (formato local)
+        };
 
-        function salvarInscricao(aluno) {
-            let inscricoes = JSON.parse(localStorage.getItem('inscricoes')) || [];
-            inscricoes.push(aluno);
-            localStorage.setItem('inscricoes', JSON.stringify(inscricoes));
-        }
-    </script>
+        // Salva a inscrição no armazenamento local do navegador
+        salvarInscricao(aluno);
+        
+        // Mostra uma mensagem de sucesso
+        alert('Inscrição realizada com sucesso!');
+
+        // Limpa os campos do formulário após o envio
+        this.reset();
+    });
+
+    // Função para salvar a inscrição no localStorage
+    function salvarInscricao(aluno) {
+        let inscricoes = JSON.parse(localStorage.getItem('inscricoes')) || []; 
+        // Recupera as inscrições salvas, ou cria um array vazio se não houver nenhuma
+
+        inscricoes.push(aluno); // Adiciona o novo aluno ao array de inscrições
+
+        localStorage.setItem('inscricoes', JSON.stringify(inscricoes)); 
+        // Salva novamente no localStorage, convertendo o array para JSON
+    }
+</script>
         <footer>
         <div class="footer-content">
             <div class="footer-section">
